@@ -128,21 +128,14 @@ def sparse_continents
     name, continent, population
   FROM
     countries
-  WHERE continent IN (
-    SELECT
-      continent AS special_continent
-    FROM
-      countries
-    WHERE 
-      25000000 < ALL (
-        SELECT  
-          name
-        FROM
-          countries
-        WHERE
-          continent = special_continent
-      )
-      
-  );
+  WHERE 
+    continent NOT IN (
+      SELECT 
+        continent
+      FROM
+        countries
+      WHERE
+        population >= 25000000
+    );
   SQL
 end
